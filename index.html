@@ -3,87 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random List Picker</title>
+    <title>ShuffleSpot - Random Picker</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .nav {
+            background: #007BFF;
+            padding: 15px;
+            font-size: 20px;
+            font-weight: bold;
             display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0 20px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
+            background-image: url('background.jpeg');
+            background-size: cover;
+            background-position: center;
         }
-        .container {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            width: 75vh;
-            height: 50vh;
-            color: black;
-            position: relative;
-        }
-        .branding {
-            position: absolute;
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%);
+        .button {
             background: #007BFF;
             color: white;
-            padding: 5px 15px;
-            border-radius: 15px;
-            font-weight: bold;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-        input, button {
-            width: calc(100% - 20px);
-            padding: 10px;
-            margin: 10px 0;
+            padding: 6px 15px;
+            font-size: 14px;
             border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .button:hover {
+            background: #0056b3;
+        }
+        .list-container, .input-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            color: black;
+            width: 250px;
+            margin-bottom: 15px;
+        }
+        .name-list {
+            list-style: none;
+            padding: 0;
+            max-height: 150px;
+            overflow-y: auto;
+            margin-top: 10px;
+        }
+        .name-list li {
+            background: #f1f1f1;
+            padding: 8px;
+            margin: 3px 0;
             border-radius: 5px;
         }
         input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
             border: 1px solid #ccc;
-            box-sizing: border-box;
-        }
-        button {
-            background: #007BFF;
-            color: white;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        button:hover {
-            background: #0056b3;
-        }
-        #result {
-            margin-top: 20px;
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="branding">ShuffleSpot</div>
-        <h2>Random Picker</h2>
-        <input type="text" id="names" placeholder="Enter names, separated by commas">
-        <button onclick="pickRandom()">Pick Random</button>
-        <div id="result"></div>
+    <div class="nav">
+        <a href="#" onclick="showHome()">ShuffleSpot</a>
+    </div>
+
+    <div id="home" class="container">
+        <h1>Welcome to ShuffleSpot</h1>
+        <button class="button" onclick="showNamesPage()">Get Started</button>
+    </div>
+
+    <!-- Add Names Page -->
+    <div id="namesPage" class="container" style="display: none;">
+        <div class="input-container">
+            <h2>Enter Names</h2>
+            <input type="text" id="nameInput" placeholder="Type a name...">
+            <button class="button" onclick="addName()">Add</button>
+        </div>
+
+        <!-- List of Added Names -->
+        <div class="list-container">
+            <h3>Added Names</h3>
+            <div id="addedNamesComponent"></div> <!-- List of added names will be rendered here -->
+        </div>
+
+        <button class="button" onclick="generateRandomPairs()">Generate Pairs</button>
+    </div>
+
+    <!-- Loading State -->
+    <div id="loading" class="container" style="display: none;">
+        <h2>Generating random pairs...</h2>
+    </div>
+
+    <!-- Result Page -->
+    <div id="resultPage" class="container" style="display: none;">
+        <h2>🎉 Random Pairs:</h2>
+        <div id="randomPairs"></div>
+        <button class="button" onclick="showNamesPage()">Try Again</button>
     </div>
 
     <script>
-        function pickRandom() {
-            const input = document.getElementById("names").value;
-            const namesArray = input.split(",").map(name => name.trim()).filter(name => name);
-            if (namesArray.length > 0) {
-                const randomName = namesArray[Math.floor(Math.random() * namesArray.length)];
-                document.getElementById("result").textContent = `🎉 Selected: ${randomName}`;
-            } else {
-                document.getElementById("result").textContent = "Please enter at least one name.";
+        let names = [];
+
+        function showHome() {
+            document.getElementById("home").style.display = "flex";
+            document.getElementById("namesPage").style.display = "none";
+            document.getElementById("loading").style.display = "none";
+            document.getElementById("resultPage").style.display = "none";
+        }
+
+        function showNamesPage() {
+            document.getElementById("home").style.display = "none";
+            document.getElementById("namesPage").style.display = "flex";
+            document.getElementById("loading").style.display = "none";
+            document.getElementById("resultPage").style.display = "none";
+        }
+
+        function addName() {
+            const nameInput = document.getElementById("nameInput");
+            const name = nameInput.value.trim();
+            if (name) {
+                names.push(name);
+                nameInput.value = "";
+                updateNameList();
             }
+        }
+
+        // Create and update the added names list component
+        function updateNameList() {
+            const nameListContainer = document.getElementById("addedNamesComponent");
+            nameListContainer.innerHTML = ''; // Clear current list
+
+            const nameList = document.createElement("ul");
+            nameList.classList.add("name-list");
+
+            names.forEach(name => {
+                const li = document.createElement("li");
+                li.textContent = name;
+                nameList.appendChild(li);
+            });
+
+            nameListContainer.appendChild(nameList);
+        }
+
+        function generateRandomPairs() {
+            if (names.length < 2) {
+                alert("Please add at least two names to generate pairs.");
+                return;
+            }
+
+            // Shuffle the names array
+            names = names.sort(() => Math.random() - 0.5);
+
+            // If the number of names is odd, remove one name (or we could handle this differently)
+            if (names.length % 2 !== 0) {
+                names.pop(); // Remove the last name to ensure we have even pairs
+            }
+
+            // Generate pairs
+            let pairs = [];
+            for (let i = 0; i < names.length; i += 2) {
+                pairs.push([names[i], names[i + 1]]);
+            }
+
+            document.getElementById("namesPage").style.display = "none";
+            document.getElementById("loading").style.display = "flex";
+
+            setTimeout(() => {
+                document.getElementById("randomPairs").innerHTML = pairs.map(pair => {
+                    return `<p>${pair[0]} & ${pair[1]}</p>`;
+                }).join('');
+                document.getElementById("loading").style.display = "none";
+                document.getElementById("resultPage").style.display = "flex";
+            }, 2000);
         }
     </script>
 </body>
