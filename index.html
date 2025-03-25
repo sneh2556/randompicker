@@ -2,11 +2,89 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GFG</title>
+    <title>Random List Picker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 75vh;
+            height: 50vh;
+            color: black;
+            position: relative;
+        }
+        .branding {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #007BFF;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        input, button {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+        }
+        input {
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        button {
+            background: #007BFF;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello World this is my first web page.</h1>
+    <div class="container">
+        <div class="branding">ShuffleSpot</div>
+        <h2>Random Picker</h2>
+        <input type="text" id="names" placeholder="Enter names, separated by commas">
+        <button onclick="pickRandom()">Pick Random</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function pickRandom() {
+            const input = document.getElementById("names").value;
+            const namesArray = input.split(",").map(name => name.trim()).filter(name => name);
+            if (namesArray.length > 0) {
+                const randomName = namesArray[Math.floor(Math.random() * namesArray.length)];
+                document.getElementById("result").textContent = `🎉 Selected: ${randomName}`;
+            } else {
+                document.getElementById("result").textContent = "Please enter at least one name.";
+            }
+        }
+    </script>
 </body>
 </html>
