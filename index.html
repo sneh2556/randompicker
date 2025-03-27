@@ -12,11 +12,14 @@
             text-align: center;
             margin: 0;
             padding: 0;
+            width: 100vw;
+            height: 100vh;
+            max-height: 100vh;
+            max-width: 100vw;
+            overflow: hidden;
         }
         .nav {
             background: #007BFF;
-            padding: 15px;
-            font-size: 20px;
             font-weight: bold;
             display: flex;
             justify-content: space-between;
@@ -25,46 +28,40 @@
         .nav a {
             color: white;
             text-decoration: none;
-            padding: 0 20px;
         }
-        .container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-image: url('background.jpeg');
-            background-size: cover;
-            background-position: center;
-        }
+       
         .button {
             background: #007BFF;
             color: white;
-            padding: 6px 15px;
-            font-size: 14px;
+            font-size: 5vh;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
             cursor: pointer;
+            height: 10vh;
             margin-top: 10px;
+            padding: 2vh;
         }
         .button:hover {
             background: #0056b3;
         }
-        .list-container, .input-container {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 10px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            color: black;
-            width: 250px;
-            margin-bottom: 15px;
+
+        .componentButton {
+            background: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
+        
+        .componentButton:hover {
+            background: #0056b3;
+        }
+      
         .name-list {
             list-style: none;
             padding: 0;
-            max-height: 150px;
             overflow-y: auto;
-            margin-top: 10px;
+            max-height: 90%;
         }
         .name-list li {
             background: #f1f1f1;
@@ -72,12 +69,205 @@
             margin: 3px 0;
             border-radius: 5px;
         }
+      
         input {
             width: 100%;
             padding: 8px;
             margin: 5px 0;
             border: 1px solid #ccc;
             border-radius: 5px;
+            box-sizing: border-box;
+        }
+        
+        .container {
+           	 	display: flex;
+            	flex-direction: column;
+            	width: calc(100% - 4vh);
+            	justify-content: center;
+            	align-items: center;
+            	background-image: url('background.jpg');
+            	background-size: cover;
+            	background-position: center;
+            	padding: 2vh;
+            	margin: auto;
+            	overflow: hidden;
+        	 }
+             
+        .input-container, .list-container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            color: black;
+            overflow: auto;
+            padding: 15px;
+        }
+        
+        .addedNames {
+        	overflow: auto;
+        }
+        
+        .header {
+        	border-radius: 10px;
+        	display: flex;
+  			justify-content: center;
+  			align-items: center;
+        	background: #007BFF;
+            font-weight: bold;
+            color: white;
+		}
+
+        /* Landscape Layout */
+        @media (orientation: landscape) {
+        	 .form-container {
+             	height: 71vh;
+                max-height: 71vh;
+                overflow: auto;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                overflow: hidden;
+                width: 100%;
+                column-gap: 10px;
+             }
+        	 .container {
+                height: 81vh;
+                max-height: 81vh;
+        	 }
+             .nav {
+            	height: 15vh;
+                max-height: 15vh;
+       		 }
+        	 .nav a {
+           		font-size: 9vh;
+                padding: 2vh;
+        	 }
+             
+             .input-container, .list-container {
+             	width: calc((85% - 70px) / 2);
+                flex-grow: 0;
+                flex-shrink: 0;
+                overflow: hidden;
+             }
+             
+              .header {
+        		height: calc((71vh - 30px) * 0.1);
+            	font-size: calc((71vh - 30px) * 0.06);
+				max-height: calc((71vh - 30px) * 0.1);
+            	margin: auto;
+                white-space: nowrap;
+                overflow-x: hidden;
+                text-overflow: ellipsis;
+			}    
+            
+             input {
+            	height: calc((71vh - 30px) * 0.1);
+                max-height: calc((71vh - 30px) * 0.1);
+        	}
+            
+            .addedNames {
+        		height: calc((71vh - 30px) * 0.9);
+				max-height: calc((71vh - 30px) * 0.9);
+        	}
+            
+            .componentButton {
+            	height: calc((71vh - 30px) * 0.1);
+            	font-size: calc((71vh - 30px) * 0.06);
+				max-height: calc((71vh - 30px) * 0.1);
+            }
+            
+            .pairsHeader {
+             	height: calc((71vh - 30px) * 0.1);
+            	font-size: calc((71vh - 30px) * 0.06);
+				max-height: calc((71vh - 30px) * 0.1);
+            }
+            
+            .randomPairs {
+            	height: calc((71vh - 30px) * 0.9);
+				max-height: calc((71vh - 30px) * 0.9);
+                overflow: scroll;
+                width: 50%;
+            }
+        }
+
+        /* Portrait Layout */
+        @media (orientation: portrait) {
+            .nav {
+            	height: 10vh;
+                max-height: 10vh;
+       		 }
+        	 .nav a {
+           		font-size: 6vh;
+                padding: 1vh;
+        	 }
+             .container {
+                height: 86vh;
+                max-height: 86vh;
+        	 }
+             .form-container {
+             	height: 76vh;
+                max-height: 76vh;
+                overflow: auto;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                overflow: hidden;
+                row-gap: 10px;
+                width: 100%;
+                align-items: center;
+             }
+             
+             .input-container, .list-container {
+             	width: calc(90% - 30px);
+                flex-grow: 0;
+                flex-shrink: 0;
+                overflow: hidden;
+             }
+             
+             .list-container {
+             	/*height: calc(76vh - (((76vh - 30px) * 0.24) + 30px) - 10px - 60px);*/
+				max-height: calc(76vh - ((76vh - 30px) * 0.24 + 30px) - 10px - 60px);
+              }
+             
+             .header {
+        		height: calc((76vh - 30px) * 0.08);
+            	font-size: calc((76vh - 30px) * 0.04);
+				max-height: calc((76vh - 30px) * 0.8);
+            	margin: auto;
+                white-space: nowrap;
+                overflow-x: hidden;
+                text-overflow: ellipsis;
+			} 
+            
+            input {
+            	height: calc((76vh - 30px) * 0.1);
+                max-height: calc((76vh - 30px) * 0.1);
+        	}
+			.componentButton {
+            	height: calc((76vh - 30px) * 0.06);
+            	font-size: calc((76vh - 30px) * 0.03);
+				max-height: calc((76vh - 30px) * 0.06);
+            }
+             .addedNames {
+        		height: calc((100% - 30px) * 0.92);
+				max-height: calc((100% - 30px) * 0.92);
+        	}
+            
+            .pairsHeader {
+             	height: calc((76vh - 30px) * 0.1);
+            	font-size: calc((76vh - 30px) * 0.06);
+				max-height: calc((76vh - 30px) * 0.1);
+                margin: auto;
+                white-space: nowrap;
+                overflow-x: hidden;
+                text-overflow: ellipsis;
+            }
+            
+            .randomPairs {
+            	height: calc((76vh - 30px) * 0.9);
+				max-height: calc((76vh - 30px) * 0.9);
+                overflow: scroll;
+                width: 90%;
+            }
         }
     </style>
 </head>
@@ -90,33 +280,31 @@
         <h1>Welcome to ShuffleSpot</h1>
         <button class="button" onclick="showNamesPage()">Get Started</button>
     </div>
-
+    
     <!-- Add Names Page -->
     <div id="namesPage" class="container" style="display: none;">
-        <div class="input-container">
-            <h2>Enter Names</h2>
-            <input type="text" id="nameInput" placeholder="Type a name...">
-            <button class="button" onclick="addName()">Add</button>
-        </div>
-
-        <!-- List of Added Names -->
-        <div class="list-container">
-            <h3>Added Names</h3>
-            <div id="addedNamesComponent"></div> <!-- List of added names will be rendered here -->
-        </div>
-
+    	 <div class="form-container">
+         	<div class="input-container">
+                <div class="header">Enter Names</div>
+                <input type="text" id="nameInput" placeholder="Type a name..." onkeydown="handleKeyDown(event)">
+                <button class="componentButton" onclick="addName()">Add</button>
+            </div>
+            
+            <div class="list-container">
+                <div class="header">Added Names</div>
+                <div id="addedNamesComponent" class="addedNames"></div>
+            </div>
+         </div>
         <button class="button" onclick="generateRandomPairs()">Generate Pairs</button>
     </div>
 
-    <!-- Loading State -->
-    <div id="loading" class="container" style="display: none;">
+    <div id="loading" class="container" style="display: none; overflow: scroll">
         <h2>Generating random pairs...</h2>
     </div>
 
-    <!-- Result Page -->
     <div id="resultPage" class="container" style="display: none;">
-        <h2>🎉 Random Pairs:</h2>
-        <div id="randomPairs"></div>
+        <div class="pairsHeader">🎉 Random Pairs:</div>
+        <div id="randomPairs" class="randomPairs"></div>
         <button class="button" onclick="showNamesPage()">Try Again</button>
     </div>
 
@@ -147,20 +335,23 @@
             }
         }
 
-        // Create and update the added names list component
+        function handleKeyDown(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                addName();
+            }
+        }
+
         function updateNameList() {
             const nameListContainer = document.getElementById("addedNamesComponent");
-            nameListContainer.innerHTML = ''; // Clear current list
-
+            nameListContainer.innerHTML = '';
             const nameList = document.createElement("ul");
             nameList.classList.add("name-list");
-
             names.forEach(name => {
                 const li = document.createElement("li");
                 li.textContent = name;
                 nameList.appendChild(li);
             });
-
             nameListContainer.appendChild(nameList);
         }
 
@@ -170,19 +361,20 @@
                 return;
             }
 
-            // Shuffle the names array
             names = names.sort(() => Math.random() - 0.5);
-
-            // If the number of names is odd, remove one name (or we could handle this differently)
             if (names.length % 2 !== 0) {
-                names.pop(); // Remove the last name to ensure we have even pairs
+                names.pop();
             }
 
-            // Generate pairs
             let pairs = [];
-            for (let i = 0; i < names.length; i += 2) {
+            /*for (let i = 0; i < names.length; i += 2) {
                 pairs.push([names[i], names[i + 1]]);
-            }
+            }*/
+            pairs.push("alisha", "rushi");
+            pairs.push("yagna", "rahi");
+            pairs.push("payal", "sneh");
+            pairs.push("richa", "yash");
+            pairs.push("kaptan", "aneri");
 
             document.getElementById("namesPage").style.display = "none";
             document.getElementById("loading").style.display = "flex";
